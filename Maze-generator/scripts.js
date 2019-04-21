@@ -5,7 +5,7 @@ height *= 4 ;
 width *= 4 ; 
 
 let neighbours = 4 ;
-let neighbourArray = [[0,-1], [0,1], [1,0], [-1,0]] ;  
+let neighbourArray = [[0,-1], [0,1], [-1,0], [1,0]] ;  
 let arr = [] ; 
 
 function inGrid(p){
@@ -25,7 +25,7 @@ function createBlock(par,i,j){
 function createRow(){
     let par = document.createElement('div');
     par.setAttribute('class', 'container');
-    console.log(par); 
+    // console.log(par); 
     document.body.appendChild(par);
     return par; 
 }
@@ -55,10 +55,7 @@ while(freeCount > 0 ){
             }
         }
     }
-    let cellId = 'block' + cell.x + ' ' +  cell.y ; 
-    console.log(document.getElementById(cellId)) ; 
-    let curBlock = document.getElementById(cellId) ; 
-    curBlock.classList.add('no-wall-east');
+
     let count = 0 ; 
     while(true){
         count++ ; 
@@ -70,7 +67,7 @@ while(freeCount > 0 ){
         for(let i =0;i < neighbours ;i++ ){
 
             let newcell = { x : cell.x + neighbourArray[i][0] , y: cell.y + neighbourArray[i][1] } ;
-            console.log('newcell', newcell,  inGrid(newcell) );
+            // console.log('newcell', newcell,  inGrid(newcell) );
 
             if( inGrid(newcell) && (arr[newcell.x][newcell.y]  === 0)){
                 ind.push(i) ; 
@@ -79,12 +76,44 @@ while(freeCount > 0 ){
 
         }
 
-        console.log(ind.length);
+        // console.log(ind.length);
         if(ind.length == 0 ) break ; 
 
         let rind = Math.floor((Math.random() * ind.length )) ; 
-        console.log(rind);
+        // console.log(rind);
+        let nextcell =  {x : cell.x  + neighbourArray[ind[rind]][0] , y :cell.y + neighbourArray[ind[rind]][1] } ; 
 
-        cell =  {x : cell.x  + neighbourArray[ind[rind]][0] , y :cell.y + neighbourArray[ind[rind]][1] } ; 
+        // console.log('nextcell',nextcell) ; 
+        let cellId = 'block' + cell.x + ' ' +  cell.y ; 
+        let curBlock = document.getElementById(cellId) ; 
+        console.log(curBlock) ; 
+
+        let nextcellId = 'block' + nextcell.x + ' ' +  nextcell.y ; 
+        let nextBlock = document.getElementById(nextcellId) ; 
+        console.log(nextBlock) ; 
+
+        if(ind[rind] === 0 ){
+            nextBlock.classList.add('no-wall-west');
+            curBlock.classList.add('no-wall-east');
+        }
+        else if(ind[rind] === 1){
+            nextBlock.classList.add('no-wall-east');
+            curBlock.classList.add('no-wall-west');
+
+        }
+        else if(ind[rind] === 3 ){
+            nextBlock.classList.add('no-wall-north');
+            curBlock.classList.add('no-wall-south');
+
+        }
+        else{
+            nextBlock.classList.add('no-wall-south');
+            curBlock.classList.add('no-wall-north');
+
+        }
+
+    
+        cell = nextcell ; 
+
     }
 }

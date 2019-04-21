@@ -20,7 +20,7 @@
   }
   
   .wine {
-    background: #ffd8f7;
+    background:  #912121;
   }
 
 .no-wall-north {
@@ -28,7 +28,7 @@
 }
 
 .no-wall-east {
-	border-right: 0;
+	border-left: 0;
 }
 
 .no-wall-south {
@@ -36,7 +36,7 @@
 }
 
 .no-wall-west {
-	border-left: 0;
+	border-right: 0;
 }
 
 input[type=text], select {
