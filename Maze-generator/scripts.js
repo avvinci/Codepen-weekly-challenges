@@ -6,25 +6,30 @@ width *= 4 ;
 
 let arr = [] ; 
 
+function createBlock(par){
 
-function createBlock(){
     let elem  = document.createElement('div');
-    console.log('hi');
-    // elem.className = "" ; 
     elem.setAttribute('class', 'block wine');
-    document.body.appendChild(elem);
+    par.appendChild(elem);
 }
+
+function createRow(){
+    let par = document.createElement('div');
+    par.setAttribute('class', 'container');
+    console.log(par); 
+    document.body.appendChild(par);
+    return par; 
+}
+
 
 for(let i=0;i<height;i++){
     let temp =[] ; 
+    let par  = createRow() ; 
+
     for(let j= 0 ;j < width ; j++ ){
         temp.push(0) ;
-        createBlock() ;  
+        createBlock(par) ;  
     }
-    var br = document.createElement("br");
-    document.body.appendChild(br);
-    document.body.appendChild(br);
-
     arr.push(temp) ; 
 }
 
