@@ -1,10 +1,13 @@
-let height = 4 ; 
-let width = 4; 
+let height = 5 ; 
+let width = 5; 
 
 height *= 4 ; 
 width *= 4 ; 
 
+let neighbours = 4 ;
+let neighbourArray = [[0,-1], [0,1], [1,0], [-1,0]] ;  
 let arr = [] ; 
+let available = new Set() ; 
 
 function createBlock(par){
 
@@ -28,9 +31,24 @@ for(let i=0;i<height;i++){
 
     for(let j= 0 ;j < width ; j++ ){
         temp.push(0) ;
+        available.add([i,j]) ; 
         createBlock(par) ;  
     }
     arr.push(temp) ; 
 }
 
-console.log(arr); 
+while(available.size > 0 ){
+
+    const iterator1 = available[Symbol.iterator]();
+    let cell = iterator1.next().value ; 
+    console.log(cell) ; 
+    available.delete(cell) ; 
+    // for(let i =0;i < neighbours ;i++ ){
+    //     let newcell = cell + neighbourArray[i];
+    //     if(available.has(newcell)){
+    //         available.delete(newcell); 
+    //     } 
+
+    // }
+}
+console.log(available); 
