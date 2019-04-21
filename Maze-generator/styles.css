@@ -1,9 +1,9 @@
 .block {
     float: left;
-    width: 15px;
-    height: 15px;
+    width: 18px;
+    height: 18px;
     /* margin: 5px; */
-    border: 1px solid rgba(0, 0, 0, .2);
+    border: 1px solid#282728;
   }
 
   .container{
@@ -20,5 +20,46 @@
   }
   
   .wine {
-    background: #ae163e;
+    background: #dd002d;
+  }
+
+.no-wall-north {
+	border-top: 0;
+}
+
+.no-wall-east {
+	border-right: 0;
+}
+
+.no-wall-south {
+	border-bottom: 0;
+}
+
+.no-wall-west {
+	border-left: 0;
+}
+
+input[type=text], select {
+    width: 25%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+  }
+
+  input[type=submit] {
+    width: 10%;
+    background-color: #4CAF50;
+    color: white;
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  input[type=submit]:hover {
+    background-color: #45a049;
   }
