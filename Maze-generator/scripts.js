@@ -7,10 +7,9 @@ width *= 4 ;
 let neighbours = 4 ;
 let neighbourArray = [[0,-1], [0,1], [1,0], [-1,0]] ;  
 let arr = [] ; 
-let available = new Set() ; 
 
 function inGrid(p){
-    if(p[0] >= 0 && p[1] >= 0 && p[0] < height && p[1] < width) 
+    if(p.x >= 0 && p.y >= 0 && p.x < height && p.y < width) 
         return true; 
     return false ; 
 }
@@ -38,41 +37,55 @@ for(let i=0;i<height;i++){
 
     for(let j= 0 ;j < width ; j++ ){
         temp.push(0) ;
-        available.add([i,j]) ; 
         createBlock(par,i,j) ;  
     }
     arr.push(temp) ; 
 }
 
-// console.log(available);  
+let freeCount = height*width ; 
 
-while(available.size > 0 ){
+while(freeCount > 0 ){
 
-    const iterator1 = available[Symbol.iterator]();
-    let cell = iterator1.next().value ; 
+    cell = {x:0,y:0} ; 
+    for(let i = 0 ; i < height ; i++ ){
+        for(j=0 ;j < width ;j++ ){
+            if(arr[i][j] == 0){
+                cell.x = i ; 
+                cell.y = j ; 
+            }
+        }
+    }
+    let cellId = 'block' + cell.x + ' ' +  cell.y ; 
+    console.log(document.getElementById(cellId)) ; 
+    let curBlock = document.getElementById(cellId) ; 
+    // curBlock.classList.add('no-wall-east');
+    // DOMCurrentCell.classList.add('no-wall-east');
     let count = 0 ; 
     while(true){
         count++ ; 
         if(count > 100 ) break ;  
         console.log(cell) ; 
-        console.log(available.has(cell)); 
-        available.delete(cell) ; 
+        arr[cell.x][cell.y] = 1; 
+        freeCount-- ; 
         let ind = [] ; 
         for(let i =0;i < neighbours ;i++ ){
-            let newcell = [cell[0] + neighbourArray[i][0] , cell[1] + neighbourArray[i][1] ] ;
-            console.log('newcell', newcell , available.has(cell));
-            if( inGrid(newcell) && available.has(newcell)){
-                ind.push(i) ; 
-                // available.delete(newcell); 
-            } 
-        }
-        console.log(ind.length);
 
+            let newcell = { x : cell.x + neighbourArray[i][0] , y: cell.y + neighbourArray[i][1] } ;
+            console.log('newcell', newcell,  inGrid(newcell) );
+
+            if( inGrid(newcell) && (arr[newcell.x][newcell.y]  === 0)){
+                ind.push(i) ; 
+                console.log('newcell', newcell , arr[newcell.x][newcell.y]);
+            } 
+
+        }
+
+        console.log(ind.length);
         if(ind.length == 0 ) break ; 
 
-        let rind = Math.random(ind.length) ; 
-        cell =  [cell[0] + neighbourArray[rind][0] , cell[1] + neighbourArray[rind][1] ] ; 
+        let rind = Math.floor((Math.random() * ind.length )) ; 
+        console.log(rind);
+
+        cell =  {x : cell.x  + neighbourArray[ind[rind]][0] , y :cell.y + neighbourArray[ind[rind]][1] } ; 
     }
 }
-
-// console.log(available); 
