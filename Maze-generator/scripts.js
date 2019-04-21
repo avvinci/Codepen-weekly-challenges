@@ -58,8 +58,7 @@ while(freeCount > 0 ){
     let cellId = 'block' + cell.x + ' ' +  cell.y ; 
     console.log(document.getElementById(cellId)) ; 
     let curBlock = document.getElementById(cellId) ; 
-    // curBlock.classList.add('no-wall-east');
-    // DOMCurrentCell.classList.add('no-wall-east');
+    curBlock.classList.add('no-wall-east');
     let count = 0 ; 
     while(true){
         count++ ; 

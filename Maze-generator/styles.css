@@ -1,8 +1,9 @@
 .block {
     float: left;
-    width: 18px;
-    height: 18px;
-    border: 1px solid#282728;
+    width: 25px;
+    height: 25px;
+    border: 2px solid#282728;
+    box-sizing: border-box;
   }
 
   .container{
@@ -19,7 +20,7 @@
   }
   
   .wine {
-    background: #dd002d;
+    background: #ffd8f7;
   }
 
 .no-wall-north {
