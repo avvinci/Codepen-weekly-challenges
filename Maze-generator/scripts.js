@@ -8,10 +8,19 @@ let neighbours = 4 ;
 let neighbourArray = [[0,-1], [0,1], [-1,0], [1,0]] ;  
 let arr = [] ; 
 
-function inGrid(p){
-    if(p.x >= 0 && p.y >= 0 && p.x < height && p.y < width) 
+function inGrid(x,y){
+    if(x >= 0 && y >= 0 && x < height && y < width) 
         return true; 
     return false ; 
+}
+function hasNeighbourVisited(x,y){
+    // return true ; 
+    for(let i =0 ; i< neighbours ;i++ ){
+        let nx = x +neighbourArray[i] ; 
+        let ny  = y + neighbourArray[i] ; 
+        if( inGrid(nx,ny)  && arr[nx][ny] ===  1) return true ;   
+    }
+    return false; 
 }
 
 function createBlock(par,i,j){
@@ -49,7 +58,8 @@ while(freeCount > 0 ){
     cell = {x:0,y:0} ; 
     for(let i = 0 ; i < height ; i++ ){
         for(j=0 ;j < width ;j++ ){
-            if(arr[i][j] == 0){
+            // if(i ===  0 && j === 0 ) continue ; 
+            if(arr[i][j] == 0 && hasNeighbourVisited(i,j)){
                 cell.x = i ; 
                 cell.y = j ; 
             }
@@ -69,7 +79,7 @@ while(freeCount > 0 ){
             let newcell = { x : cell.x + neighbourArray[i][0] , y: cell.y + neighbourArray[i][1] } ;
             // console.log('newcell', newcell,  inGrid(newcell) );
 
-            if( inGrid(newcell) && (arr[newcell.x][newcell.y]  === 0)){
+            if( inGrid(newcell.x , newcell.y) && (arr[newcell.x][newcell.y]  === 0)){
                 ind.push(i) ; 
                 console.log('newcell', newcell , arr[newcell.x][newcell.y]);
             } 
