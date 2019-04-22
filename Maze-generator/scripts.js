@@ -5,6 +5,8 @@ let createButton = document.getElementById('createButton');
 createButton.onclick = createCustomMaze ; 
 
 function createCustomMaze(){
+    // hack for now
+    window.location.reload(); 
     let height = 3  ; 
     let width = 3; 
     height *= 4 ; 
