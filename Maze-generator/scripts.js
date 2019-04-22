@@ -52,34 +52,46 @@ for(let i=0;i<height;i++){
 }
 
 let freeCount = height*width ; 
-
+let flag = 0 ; 
+let st = []; 
+st.push({x:0,y:0}) ;
+let st_size = 1 ; 
 while(freeCount > 0 ){
+    cell = st[st_size-1] ; 
+    // st_size--; 
+    // for(let i = 0 ; i < height ; i++ ){
+    //     for(j=0 ;j < width ;j++ ){
+    //         // if(i ===  0 && j === 0 ) continue ; 
+    //         // && hasNeighbourVisited(i,j)
+    //         if(arr[i][j] == 0 ){
+    //             cell.x = i ; 
+    //             cell.y = j ; 
+    //         }
+    //     }
+    // }
+    // if(flag ===  0 ){
+    //     cell.x = 0 ; cell.y = 0 ; flag = 1 ; 
+    //     // arr[0][0] = 2 ;
+    // } 
 
-    cell = {x:0,y:0} ; 
-    for(let i = 0 ; i < height ; i++ ){
-        for(j=0 ;j < width ;j++ ){
-            // if(i ===  0 && j === 0 ) continue ; 
-            if(arr[i][j] == 0 && hasNeighbourVisited(i,j)){
-                cell.x = i ; 
-                cell.y = j ; 
-            }
-        }
-    }
-
-    let count = 0 ; 
-    while(true){
-        count++ ; 
-        if(count > 100 ) break ;  
+    // let count = 0 ; 
+    // while(true){    
+        // count++ ; 
+        // if(count > 100 ) break ;  
         console.log(cell) ; 
+        // if(arr[cell.x][cell.y] === 1 ) break; 
+        if(arr[cell.x][cell.y] === 0 ) 
+            freeCount-- ; 
+
         arr[cell.x][cell.y] = 1; 
-        freeCount-- ; 
+
         let ind = [] ; 
         for(let i =0;i < neighbours ;i++ ){
 
             let newcell = { x : cell.x + neighbourArray[i][0] , y: cell.y + neighbourArray[i][1] } ;
             // console.log('newcell', newcell,  inGrid(newcell) );
-
-            if( inGrid(newcell.x , newcell.y) && (arr[newcell.x][newcell.y]  === 0)){
+            // 
+            if( inGrid(newcell.x , newcell.y) && (arr[newcell.x][newcell.y]  === 0)  ){
                 ind.push(i) ; 
                 console.log('newcell', newcell , arr[newcell.x][newcell.y]);
             } 
@@ -87,7 +99,10 @@ while(freeCount > 0 ){
         }
 
         // console.log(ind.length);
-        if(ind.length == 0 ) break ; 
+        if(ind.length == 0 ) {
+            st_size--;
+            continue ; 
+        }
 
         let rind = Math.floor((Math.random() * ind.length )) ; 
         // console.log(rind);
@@ -122,8 +137,13 @@ while(freeCount > 0 ){
 
         }
 
-    
-        cell = nextcell ; 
+        if(st_size >= st.length)
+            st.push(nextcell) ; 
+        else
+            st[st_size] = nextcell ;
+        
+        st_size++ ; 
+        // cell = nextcell ; 
 
-    }
+    // }
 }
