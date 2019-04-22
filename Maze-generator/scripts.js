@@ -51,72 +51,16 @@ for(let i=0;i<height;i++){
     arr.push(temp) ; 
 }
 
-let freeCount = height*width ; 
-let flag = 0 ; 
-let st = []; 
-st.push({x:0,y:0}) ;
-let st_size = 1 ; 
-while(freeCount > 0 ){
-    cell = st[st_size-1] ; 
-    // st_size--; 
-    // for(let i = 0 ; i < height ; i++ ){
-    //     for(j=0 ;j < width ;j++ ){
-    //         // if(i ===  0 && j === 0 ) continue ; 
-    //         // && hasNeighbourVisited(i,j)
-    //         if(arr[i][j] == 0 ){
-    //             cell.x = i ; 
-    //             cell.y = j ; 
-    //         }
-    //     }
-    // }
-    // if(flag ===  0 ){
-    //     cell.x = 0 ; cell.y = 0 ; flag = 1 ; 
-    //     // arr[0][0] = 2 ;
-    // } 
+function removeBorders(cell,nextcell ,rind,ind ){
 
-    // let count = 0 ; 
-    // while(true){    
-        // count++ ; 
-        // if(count > 100 ) break ;  
-        console.log(cell) ; 
-        // if(arr[cell.x][cell.y] === 1 ) break; 
-        if(arr[cell.x][cell.y] === 0 ) 
-            freeCount-- ; 
-
-        arr[cell.x][cell.y] = 1; 
-
-        let ind = [] ; 
-        for(let i =0;i < neighbours ;i++ ){
-
-            let newcell = { x : cell.x + neighbourArray[i][0] , y: cell.y + neighbourArray[i][1] } ;
-            // console.log('newcell', newcell,  inGrid(newcell) );
-            // 
-            if( inGrid(newcell.x , newcell.y) && (arr[newcell.x][newcell.y]  === 0)  ){
-                ind.push(i) ; 
-                console.log('newcell', newcell , arr[newcell.x][newcell.y]);
-            } 
-
-        }
-
-        // console.log(ind.length);
-        if(ind.length == 0 ) {
-            st_size--;
-            continue ; 
-        }
-
-        let rind = Math.floor((Math.random() * ind.length )) ; 
-        // console.log(rind);
-        let nextcell =  {x : cell.x  + neighbourArray[ind[rind]][0] , y :cell.y + neighbourArray[ind[rind]][1] } ; 
-
-        // console.log('nextcell',nextcell) ; 
         let cellId = 'block' + cell.x + ' ' +  cell.y ; 
         let curBlock = document.getElementById(cellId) ; 
         console.log(curBlock) ; 
-
+    
         let nextcellId = 'block' + nextcell.x + ' ' +  nextcell.y ; 
         let nextBlock = document.getElementById(nextcellId) ; 
         console.log(nextBlock) ; 
-
+    
         if(ind[rind] === 0 ){
             nextBlock.classList.add('no-wall-west');
             curBlock.classList.add('no-wall-east');
@@ -124,26 +68,59 @@ while(freeCount > 0 ){
         else if(ind[rind] === 1){
             nextBlock.classList.add('no-wall-east');
             curBlock.classList.add('no-wall-west');
-
+    
         }
         else if(ind[rind] === 3 ){
             nextBlock.classList.add('no-wall-north');
             curBlock.classList.add('no-wall-south');
-
+    
         }
         else{
             nextBlock.classList.add('no-wall-south');
             curBlock.classList.add('no-wall-north');
-
+    
         }
+}
 
-        if(st_size >= st.length)
-            st.push(nextcell) ; 
-        else
-            st[st_size] = nextcell ;
-        
-        st_size++ ; 
-        // cell = nextcell ; 
 
-    // }
+let freeCount = height*width ; 
+// let flag = 0 ; 
+let st = []; 
+st.push({x:0,y:0}) ;
+let st_size = 1 ; 
+
+while(freeCount > 0 && st_size > 0  ){
+    cell = st[st_size-1] ; 
+    // st_size--;  /////////////////////////////////////////////////
+    console.log(cell) ; 
+
+    if(arr[cell.x][cell.y] === 0 ) 
+        freeCount-- ; 
+    arr[cell.x][cell.y] = 1; 
+
+    let ind = [] ; 
+    for(let i =0;i < neighbours ;i++ ){
+        let newcell = { x : cell.x + neighbourArray[i][0] , y: cell.y + neighbourArray[i][1] } ;
+        // console.log('newcell', newcell,  inGrid(newcell) );
+        if( inGrid(newcell.x , newcell.y) && (arr[newcell.x][newcell.y]  === 0)  ){
+            ind.push(i) ; 
+            console.log('newcell', newcell , arr[newcell.x][newcell.y]);
+        } 
+    }
+
+    // console.log(ind.length);
+    if(ind.length == 0 ) {
+        st_size--;
+        continue ; 
+    }
+    let rind = Math.floor((Math.random() * ind.length )) ; 
+    // console.log(rind);
+    let nextcell =  {x : cell.x  + neighbourArray[ind[rind]][0] , y :cell.y + neighbourArray[ind[rind]][1] } ; 
+    removeBorders(cell, nextcell,rind,ind) ; 
+
+    if(st_size >= st.length)
+        st.push(nextcell) ; 
+    else
+        st[st_size] = nextcell ;
+    st_size++ ; 
 }
